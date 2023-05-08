@@ -11,6 +11,30 @@ Verificato il corretto funzionamento del nostro codice, spostiamo la logica in u
 **Milestone 3**
 Invece di visualizzare la password nella index, effettuare un redirect ad una pagina dedicata che tramite $_SESSION recupererà la password da mostrare all’utente. -->
 
+<?php
+//Lunghezza caratteri password
+$passwordLenght = $_GET['charactersNumber'];
+/* echo $passwordLenght; */
+
+//Funzione per generare la password
+function generatePassword($numb)
+{
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!$£%&*#@';
+    $password = array();
+    $charactersLenght = strlen($characters);
+    for ($i = 0; $i < $numb; $i++) {
+        $n = rand(0, $charactersLenght);
+        $password[] = $characters[$n];
+    }
+    return implode($password);
+}
+
+$passwordGenerated = generatePassword($passwordLenght);
+echo 'Ecco la tua password: ' . $passwordGenerated;
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +47,10 @@ Invece di visualizzare la password nella index, effettuare un redirect ad una pa
 <h1>Password Generator</h1>
     <form action="index.php" method="get">
         <div>
-            <label for="password">Lunghezza password:</label>
-            <input name="password" id="password" type="number">
+        <label for="charactersNumber">Lunghezza caratteri password:</label>
+            <input name="charactersNumber" id="charactersNumber" type="number" placeholder="Inserisci un numero">
         </div>
+        <button type="submit">genera Password</button>
     </form>
 </body>
 </html>
